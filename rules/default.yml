@@ -1,0 +1,92 @@
+rules:
+  - id: SSH-001
+    title: SSH brute force
+    description: Many failed SSH logins from one IP within a short window.
+    severity: high
+    log_type: ssh
+    type: threshold
+    mitre_attack: [T1110.001]
+    threshold:
+      events: [failed_password, invalid_user]
+      group_by: source_ip
+      count: 5
+      window_minutes: 5
+    remediation: Use key-based authentication, disable password login, add fail2ban or rate limiting.
+    false_positive_notes: A user mistyping a password, or many users behind one corporate NAT address.
+
+  - id: SSH-002
+    title: Password spraying or credential stuffing
+    description: One IP trying many different usernames within a short window.
+    severity: high
+    log_type: ssh
+    type: threshold
+    mitre_attack: [T1110.003, T1110.004]
+    threshold:
+      events: [failed_password, invalid_user]
+      group_by: source_ip
+      distinct: username
+      count: 10
+      window_minutes: 10
+    remediation: Disable password login, enforce MFA, restrict SSH by IP or VPN.
+    false_positive_notes: Shared bastion hosts or NAT gateways where many real users log in from one address.
+
+  - id: WEB-001
+    title: Web scanning
+    description: Many 404 responses to one IP within a short window.
+    severity: medium
+    log_type: access
+    type: threshold
+    mitre_attack: [T1595.003]
+    threshold:
+      status: [404]
+      group_by: source_ip
+      count: 30
+      window_minutes: 2
+    remediation: Rate-limit or block the source, and make sure no sensitive paths are exposed.
+    false_positive_notes: Broken links after a site migration, or search engine crawlers hitting removed pages.
+
+  - id: WEB-002
+    title: Attack strings in request
+    description: SQL injection, XSS or path traversal patterns in the decoded URL.
+    severity: high
+    log_type: access
+    type: pattern
+    mitre_attack: [T1190]
+    match:
+      field: decoded_url
+      case_insensitive: true
+      patterns:
+        - kind: regex
+          name: sqli-union-select
+          value: 'union\s+select'
+        - kind: contains
+          name: xss-script-tag
+          value: '<script'
+        - kind: contains
+          name: path-traversal
+          value: '../'
+    remediation: Use parameterised queries, output encoding and input validation. Check the application, not just the log.
+    false_positive_notes: Security scanners you run yourself, and developers pasting payloads into bug reports or search boxes.
+
+  - id: WEB-003
+    title: Known scanner user agent
+    description: Request sent with a user agent that names a known scanning tool.
+    severity: medium
+    log_type: access
+    type: pattern
+    mitre_attack: [T1595.002]
+    match:
+      field: user_agent
+      case_insensitive: true
+      patterns:
+        - kind: contains
+          name: sqlmap
+          value: sqlmap
+        - kind: contains
+          name: nikto
+          value: nikto
+        - kind: contains
+          name: nmap
+          value: nmap
+    remediation: Block or rate-limit the source and review what it requested.
+    false_positive_notes: Your own authorised scans. Attackers can trivially change the user agent, so absence of a match proves nothing.
