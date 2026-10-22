@@ -182,3 +182,7 @@ def test_sample_file_decodes_traversal_payload() -> None:
     events = list(parse_access_file(SAMPLE, ParseStats()))
     decoded = {event.decoded_url for event in events if event.source_ip == "203.0.113.40"}
     assert "/download?file=../../../etc/passwd" in decoded
+
+
+def test_huge_numeric_size_does_not_crash() -> None:
+    assert parse_access_line(make_line(size="9" * 5000)) is None

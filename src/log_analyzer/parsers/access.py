@@ -26,7 +26,7 @@ MONTHS = {
 QUOTED = r'"((?:[^"\\]|\\.)*)"'
 
 LINE_PATTERN = re.compile(
-    rf"^(\S+) \S+ \S+ \[([^\]]*)\] {QUOTED} (\d{{3}}) (\d+|-) {QUOTED} {QUOTED}$"
+    rf"^(\S+) \S+ \S+ \[([^\]]*)\] {QUOTED} (\d{{3}}) (\d{{1,12}}|-) {QUOTED} {QUOTED}$"
 )
 
 TIMESTAMP_PATTERN = re.compile(
