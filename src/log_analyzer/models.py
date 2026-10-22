@@ -115,3 +115,17 @@ class Rule:
     enabled: bool
     threshold: ThresholdSpec | None
     match: MatchSpec | None
+
+
+@dataclass(frozen=True, slots=True)
+class Finding:
+    rule_id: str
+    severity: Severity
+    source_ip: str
+    first_seen: datetime
+    last_seen: datetime
+    event_count: int
+    distinct_count: int | None
+    evidence: tuple[str, ...]
+    first_line: int
+    last_line: int

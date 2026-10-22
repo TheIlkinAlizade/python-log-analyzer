@@ -7,7 +7,7 @@ rules:
     type: threshold
     mitre_attack: [T1110.001]
     threshold:
-      events: [failed_password, invalid_user]
+      events: [failed_password]
       group_by: source_ip
       count: 5
       window_minutes: 5

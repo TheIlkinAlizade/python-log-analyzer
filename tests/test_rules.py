@@ -297,7 +297,7 @@ def test_default_ssh_brute_force_rule() -> None:
     assert rule.threshold is not None
     assert rule.threshold.count == 5
     assert rule.threshold.window_minutes == 5
-    assert rule.threshold.events == (SshEventType.FAILED_PASSWORD, SshEventType.INVALID_USER)
+    assert rule.threshold.events == (SshEventType.FAILED_PASSWORD,)
     assert rule.threshold.distinct is None
 
 
