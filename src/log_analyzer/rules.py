@@ -129,9 +129,7 @@ def get_int(
     return value
 
 
-def get_bool(
-    data: dict[str, Any], key: str, default: bool, where: str, errors: list[str]
-) -> bool:
+def get_bool(data: dict[str, Any], key: str, default: bool, where: str, errors: list[str]) -> bool:
     if key not in data:
         return default
     value = data[key]
