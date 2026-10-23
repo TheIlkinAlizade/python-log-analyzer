@@ -217,3 +217,8 @@ def test_rollover_sample_with_guessed_year() -> None:
     assert events[-1].timestamp == datetime(2026, 1, 1, 0, 0, 50)
     assert resolver.year_assumed is True
     assert resolver.first_year == 2025
+
+
+def test_ipv6_scope_id_is_rejected() -> None:
+    line = make_line("Failed password for root from fe80::1%\x1b[31m port 22 ssh2")
+    assert parse(line) is Outcome.FAILED

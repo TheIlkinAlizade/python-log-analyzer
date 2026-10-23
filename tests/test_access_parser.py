@@ -186,3 +186,8 @@ def test_sample_file_decodes_traversal_payload() -> None:
 
 def test_huge_numeric_size_does_not_crash() -> None:
     assert parse_access_line(make_line(size="9" * 5000)) is None
+
+
+def test_ipv6_scope_id_is_rejected() -> None:
+    assert parse_access_line(make_line(ip="fe80::1%eth0")) is None
+    assert parse_access_line(make_line(ip="fe80::1%\x1b[31m")) is None

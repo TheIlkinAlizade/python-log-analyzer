@@ -35,6 +35,8 @@ TIMESTAMP_PATTERN = re.compile(
 
 
 def normalize_ip(value: str) -> str | None:
+    if "%" in value:
+        return None
     try:
         return str(ipaddress.ip_address(value))
     except ValueError:
