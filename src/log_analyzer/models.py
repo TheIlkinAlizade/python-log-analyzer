@@ -129,3 +129,4 @@ class Finding:
     evidence: tuple[str, ...]
     first_line: int
     last_line: int
+    matched: tuple[str, ...] = ()
