@@ -297,7 +297,7 @@ def test_escape_sequences_in_ssh_logs_never_reach_the_output(
 
 def test_emit_replaces_characters_the_stream_cannot_encode() -> None:
     buffer = io.BytesIO()
-    stream = io.TextIOWrapper(buffer, encoding="ascii")
+    stream = io.TextIOWrapper(buffer, encoding="ascii", newline="\n")
     emit("caf\u00e9", stream)
     stream.flush()
     assert buffer.getvalue() == b"caf?\n"
