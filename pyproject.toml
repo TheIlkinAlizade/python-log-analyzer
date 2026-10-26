@@ -58,3 +58,7 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "C4"]
 python_version = "3.11"
 strict = true
 files = ["src", "tests", "scripts"]
+
+[project.urls]
+Homepage = "https://github.com/TheIlkinAlizade/python-log-analyzer"
+Issues = "https://github.com/TheIlkinAlizade/python-log-analyzer/issues"
