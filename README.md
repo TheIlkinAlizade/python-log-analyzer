@@ -69,7 +69,7 @@ They contain normal traffic plus injected attacks, one crawler that looks like a
 Output for `log-analyzer --access-log tests/data/access.log --ssh-log tests/data/auth.log --year 2026`, captured on Windows PowerShell (so the paths use backslashes):
 
 ```text
-log-analyzer 0.1.0
+log-analyzer 0.1.1
 ==================
 
 Inputs
@@ -177,7 +177,7 @@ Result: FAIL - 4 finding(s) at or above 'high'
 Note: findings come only from the supplied logs and the active rules. No findings does not prove that no attack happened.
 ```
 
-## Rules in v0.1.0
+## Rules in v0.1.1
 
 | ID | Severity | Log | What it detects | Default thresholds | MITRE ATT&CK |
 |---|---|---|---|---|---|
